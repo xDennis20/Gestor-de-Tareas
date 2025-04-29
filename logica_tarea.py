@@ -10,6 +10,15 @@ def validar_fecha(fecha_str: str) -> bool:
     except ValueError:
         return False
 
+def mostrar_tarea(tareas: list[Dict]) -> None:
+    for tarea in tareas:
+        ide = tarea.get("ID")
+        titulo = tarea.get("Titulo")
+        fecha_vencimiento = tarea.get("Fecha Vencimiento")
+        prioridad = tarea.get("Prioridad")
+        completado = "✔️" if tarea.get("Completado") else "❌"
+        print(f"ID: {ide} | [{completado} {titulo} | ⏱️ {fecha_vencimiento} | Prioridad: {prioridad}]")
+
 def agregar_tarea() -> None:
     titulo = input("Ingrese el Titulo de la tarea: ").strip()
     descripcion = input("Ingrese la descripcion de la tarea: ").strip()
@@ -41,16 +50,10 @@ def agregar_tarea() -> None:
 def listar_tarea() -> None:
     if lista_tarea:
         sorted(lista_tarea,key= lambda fecha: fecha["Fecha Vencimiento"])
-        for tarea_listar in lista_tarea:
-            ide = tarea_listar.get("ID")
-            titulo = tarea_listar.get("Titulo")
-            fecha_vencimiento = tarea_listar.get("Fecha Vencimiento")
-            prioridad = tarea_listar.get("Prioridad")
-            completado = "✔️" if tarea_listar.get("Completado") else "❌"
-            print(f"ID: {ide} | [{completado} {titulo} | ⏱️ {fecha_vencimiento} | Prioridad: {prioridad}]")
+        mostrar_tarea(lista_tarea)
 
 def buscar_tarea() -> None:
-    palabra_buscar = input("Buscar palabra: ").lower()
+    palabra_buscar = input("Buscar palabra: ").lower().strip()
     contador = 0
     lista_resultado = []
     for tarea in lista_tarea:
@@ -62,13 +65,20 @@ def buscar_tarea() -> None:
             contador +=1
             lista_resultado.append(tarea)
     if lista_resultado:
-        for tareas in lista_resultado:
-            ide_resultado = tareas.get("ID")
-            titulo_resultado = tareas.get("Titulo")
-            fecha_vencimiento_resultado = tareas.get("Fecha Vencimiento")
-            prioridad_resultado = tareas.get("Prioridad")
-            completado_resultado = "✔️" if tareas.get("Completado") else "❌"
-            print(f"ID: {ide_resultado} | [{completado_resultado} {titulo_resultado} | ⏱️ {fecha_vencimiento_resultado} | Prioridad: {prioridad_resultado}]")
+        print(f"Se encontro {contador} tareas:")
+        mostrar_tarea(lista_resultado)
     else:
         print("No se encontraron tareas con esa palabra clave")
+
+def filtrar_tarea_por_prioridad() -> None:
+    prioridad_usuario = input("Ingrese la prioridad de las tareas que desea ver: ").strip().lower()
+    lista_filtrado_prioridad = []
+    for buscar_prioridad in lista_tarea:
+        prioridad = buscar_prioridad.get("Prioridad")
+        if prioridad_usuario == prioridad:
+            lista_filtrado_prioridad.append(buscar_prioridad)
+    if lista_filtrado_prioridad:
+        mostrar_tarea(lista_filtrado_prioridad)
+    else:
+        print("No hay tareas con esa prioridad")
 

@@ -1,4 +1,4 @@
-from logica_tarea import agregar_tarea,listar_tarea,buscar_tarea
+from logica_tarea import agregar_tarea,listar_tarea,buscar_tarea,filtrar_tarea_por_prioridad
 
 def menu():
     opcion = 0
@@ -26,7 +26,7 @@ def menu():
         elif opcion == 3:
             buscar_tarea()
         elif opcion == 4:
-            pass
+            filtrar_tarea_por_prioridad()
         elif opcion == 5:
             pass
         elif opcion == 6:
