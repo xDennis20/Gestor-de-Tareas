@@ -94,7 +94,11 @@ def tareas_vencidas() -> None:
         print("🎉 No hay tareas vencidas. ¡Estás al día!")
 
 def marcar_completada():
-    id_usuario = int(input("Ingrese el ID de la tarea que busca completar: ").strip())
+    id_usuario = 0
+    try:
+        id_usuario = int(input("Ingrese el ID de la tarea que busca completar: ").strip())
+    except ValueError:
+        print("Ingrese un valor entero por favor")
     encontrado = False
     for tarea in lista_tarea:
         if tarea.get("ID") == id_usuario:
@@ -108,3 +112,16 @@ def marcar_completada():
     if not encontrado:
         print("El ID que ingreso no encontro ninguna tarea")
 
+def eliminar_tarea():
+    id_usuario = 0
+    try:
+        id_usuario = int(input("Ingrese el ID de la tarea que desea eliminar: ").strip())
+    except ValueError:
+        print("Por favor Ingrese un valor entero")
+    encontrado = False
+    for indice, tarea in enumerate(lista_tarea):
+        if tarea.get("ID") == id_usuario:
+            encontrado = True
+            del lista_tarea[indice]
+    if not encontrado:
+        print("El ID que ingreso no encontro ninguna tarea")

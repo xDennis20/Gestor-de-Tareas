@@ -1,4 +1,4 @@
-from logica_tarea import agregar_tarea,listar_tarea,buscar_tarea,filtrar_tarea_por_prioridad,tareas_vencidas
+from logica_tarea import agregar_tarea,listar_tarea,buscar_tarea,filtrar_tarea_por_prioridad,tareas_vencidas,marcar_completada,eliminar_tarea
 
 def menu():
     opcion = 0
@@ -30,9 +30,9 @@ def menu():
         elif opcion == 5:
             tareas_vencidas()
         elif opcion == 6:
-            pass
+            marcar_completada()
         elif opcion == 7:
-            pass
+            eliminar_tarea()
         elif opcion == 8:
             salir = True
 
