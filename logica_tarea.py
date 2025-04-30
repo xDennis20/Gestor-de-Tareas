@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, date
 from typing import List,Dict
 
 lista_tarea: List[Dict] = []
@@ -81,4 +81,30 @@ def filtrar_tarea_por_prioridad() -> None:
         mostrar_tarea(lista_filtrado_prioridad)
     else:
         print("No hay tareas con esa prioridad")
+
+def tareas_vencidas() -> None:
+    fecha_actual = date.today()
+    lista_tareas_vencidas = []
+    for tarea in lista_tarea:
+        if tarea.get("Fecha Vencimiento") < fecha_actual and not tarea.get("Completado"):
+            lista_tareas_vencidas.append(tarea)
+    if lista_tareas_vencidas:
+        mostrar_tarea(lista_tareas_vencidas)
+    else:
+        print("🎉 No hay tareas vencidas. ¡Estás al día!")
+
+def marcar_completada():
+    id_usuario = int(input("Ingrese el ID de la tarea que busca completar: ").strip())
+    encontrado = False
+    for tarea in lista_tarea:
+        if tarea.get("ID") == id_usuario:
+            encontrado = True
+            if not tarea.get("Completado"):
+                tarea["Completado"] = True
+                print("Fue marcado exitosamente")
+            else:
+                print("La tarea ya estaba marcada")
+            break
+    if not encontrado:
+        print("El ID que ingreso no encontro ninguna tarea")
 
