@@ -1,8 +1,9 @@
-from logica_tarea import agregar_tarea,listar_tarea,buscar_tarea,filtrar_tarea_por_prioridad,tareas_vencidas,marcar_completada,eliminar_tarea
+from logica_tarea import agregar_tarea,listar_tarea,buscar_tarea,filtrar_tarea_por_prioridad,tareas_vencidas,marcar_completada,eliminar_tarea,guardar_tarea,cargar_tareas
 
 def menu():
     opcion = 0
     salir = False
+    cargar_tareas()
     while not salir:
         print("""
     📚 Gestor de Tareas 
@@ -34,6 +35,7 @@ def menu():
         elif opcion == 7:
             eliminar_tarea()
         elif opcion == 8:
+            guardar_tarea()
             salir = True
 
 menu()

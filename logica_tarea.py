@@ -1,5 +1,6 @@
 from datetime import datetime, date
 from typing import List,Dict
+import csv
 
 lista_tarea: List[Dict] = []
 
@@ -125,3 +126,24 @@ def eliminar_tarea():
             del lista_tarea[indice]
     if not encontrado:
         print("El ID que ingreso no encontro ninguna tarea")
+
+def guardar_tarea():
+    lista_nombres = ["ID", "Titulo", "Descripcion", "Fecha Vencimiento", "Prioridad", "Completado"]
+    with open("Tareas.csv","a",newline= "") as archivo:
+        escritor = csv.DictWriter(archivo,fieldnames=lista_nombres)
+        for tarea in lista_tarea:
+            copia_de_las_tareas = tarea.copy()
+            copia_de_las_tareas["Fecha Vencimiento"] = str(copia_de_las_tareas["Fecha Vencimiento"]) #Esto es para transformar las fechas que esten formato date y transforamar string
+            escritor.writerow(copia_de_las_tareas)
+
+    print("Tarea Guardada Con Exito 🎉")
+
+def cargar_tareas():
+    with open("Tareas.csv","r",newline= "") as archivo:
+        tareas = csv.DictReader(archivo)
+        for tarea in tareas:
+            copia_tareas = tarea.copy()
+            copia_tareas["ID"] = int(copia_tareas["ID"])
+            copia_tareas["Completado"] = True if copia_tareas["Completado"] == "True" else False
+            copia_tareas["Fecha Vencimiento"] = datetime.strptime(copia_tareas["Fecha Vencimiento"],"%Y-%m-%d").date()
+            lista_tarea.append(copia_tareas)
