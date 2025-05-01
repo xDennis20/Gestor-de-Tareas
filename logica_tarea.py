@@ -1,4 +1,4 @@
-from datetime import datetime, date
+from datetime import datetime, date, timedelta
 from typing import List,Dict
 import csv
 
@@ -147,3 +147,29 @@ def cargar_tareas():
             copia_tareas["Completado"] = True if copia_tareas["Completado"] == "True" else False
             copia_tareas["Fecha Vencimiento"] = datetime.strptime(copia_tareas["Fecha Vencimiento"],"%Y-%m-%d").date()
             lista_tarea.append(copia_tareas)
+
+def recordatorio_de_tareas():
+    fecha_actual = date.today()
+    fecha_manana = fecha_actual + timedelta(days=1)
+    lista_vencidas = []
+    lista_vencen_manana = []
+    with open("Tareas.csv","r",newline= "") as archivo:
+        tareas = csv.DictReader(archivo)
+        for tarea in tareas:
+            copiar_tareas = tarea.copy()
+            fecha = copiar_tareas.get("Fecha Vencimiento")
+            fecha_vencimiento = datetime.strptime(fecha, "%Y-%m-%d").date()
+            if fecha_vencimiento < fecha_actual:
+                lista_vencidas.append(copiar_tareas)
+            if fecha_vencimiento == fecha_manana:
+                lista_vencen_manana.append(copiar_tareas)
+    if lista_vencidas:
+        print("⚠️ Tareas vencidas:")
+        mostrar_tarea(lista_vencidas)
+    else:
+        print("🎉 No hay tareas vencidas. ¡Estás al día!")
+    if lista_vencen_manana:
+        print("📅 Tareas que vencen mañana:")
+        mostrar_tarea(lista_vencen_manana)
+    else:
+        print("🎉 No hay tareas para mañana.")

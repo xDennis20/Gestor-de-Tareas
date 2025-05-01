@@ -1,9 +1,11 @@
-from logica_tarea import agregar_tarea,listar_tarea,buscar_tarea,filtrar_tarea_por_prioridad,tareas_vencidas,marcar_completada,eliminar_tarea,guardar_tarea,cargar_tareas
+from logica_tarea import agregar_tarea,listar_tarea,buscar_tarea,filtrar_tarea_por_prioridad,tareas_vencidas,marcar_completada,eliminar_tarea,guardar_tarea,cargar_tareas,recordatorio_de_tareas
 
 def menu():
     opcion = 0
     salir = False
     cargar_tareas()
+    print("")
+    recordatorio_de_tareas()
     while not salir:
         print("""
     📚 Gestor de Tareas 
